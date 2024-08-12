@@ -34,7 +34,7 @@ public class Assignment2Main {
 	public static void main(String[] args) throws IOException {
 		inputData();
 
-		System.out.println(String.format("otal number of animals: %d", animalList.size()));
+		System.out.println(String.format("Total number of animals: %d", animalList.size()));
 		for (int i = 1; i <= animalList.size(); i++) {
 			System.out.println(String.format("Animal: %d", i));
 			animalList.get(i - 1).display();
