@@ -35,7 +35,7 @@ public class Graph {
 	public void getShortestPath(String start, String end) {
 		Node startingNode = getNodeByName(start);
 		List<Edge> adjacentEdges = getAdjacentEdges(start);
-		if(adjacentEdges.isEmpty()) {
+		if(adjacentEdges.isEmpty() || start.equals(end)) {
 			this.chosenNodes.add(startingNode);
 			return;
 		}
