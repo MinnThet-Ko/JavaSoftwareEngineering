@@ -32,6 +32,19 @@ public class Graph {
 		return this.nodeList.stream().filter(node -> node.getNodeName().equals(nodeName)).collect(Collectors.toList()).get(0);
 	}
 	
+	/* This is the implementation of Dijkstras Algorithm.
+	 * This method can be decoupled into a behavior of the Graph class based on strategic design pattern.
+	 * The algorithm reference video: https://www.youtube.com/watch?v=bZkzH5x0SKU
+	 * 
+	 *  Summary of the algorithm:
+	 *
+	 * 	1. Get adjacent edges of the start node. The end nodes of the edges should be unvisited.
+	 *  2. Compare the weights of the edges and choose the shortest edge and its end node.
+	 *  3. Set the start node to visited and added to the result node list
+	 *  4. Do recursion with the shortest edge's node.
+	 *  5. The function ends when the start node and the end node are the same or the start node has no edges.
+	 * 	
+	 */
 	public void getShortestPath(String start, String end) {
 		Node startingNode = getNodeByName(start);
 		List<Edge> adjacentEdges = getAdjacentEdges(start);
