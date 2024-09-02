@@ -1,4 +1,4 @@
-package com.hm.assignment5;
+package com.hm.assignment5.models;
 
 import java.util.Formatter;
 

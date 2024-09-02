@@ -32,7 +32,7 @@ public class GraphMain {
 		graph.addEdge(edge5);
 		graph.addEdge(edge6);
 		
-		graph.getShortestPath("A", "D");
+		graph.getShortestPath("B", "E");
 		graph.showChosenNodes();
 		
 		
