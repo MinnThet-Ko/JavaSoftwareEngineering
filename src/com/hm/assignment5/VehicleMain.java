@@ -1,6 +1,7 @@
 package com.hm.assignment5;
 
 import com.hm.assignment5.services.CustomerService;
+import com.hm.assignment5.services.RentalContractService;
 import com.hm.assignment5.services.VehicleService;
 import com.hm.assignment5.utils.InputUtil;
 
@@ -9,6 +10,7 @@ public class VehicleMain {
 	public static void main(String[] args) {
 		VehicleService vehicleService =  new VehicleService();
 		CustomerService customerService = new CustomerService();
+		RentalContractService rentalContractService =  new RentalContractService();
 		
 		boolean willContinue = true;
 		while(willContinue){
@@ -21,6 +23,11 @@ public class VehicleMain {
 			System.out.println("6. Find customer by ID");
 			System.out.println("7. Update customer");
 			System.out.println("8. Delete customer");
+			System.out.println("9. Register contract");
+			System.out.println("10. Find contract by ID");
+			System.out.println("11. Update contract");
+			System.out.println("12. Delete contract");
+			
 			
 			int choice = InputUtil.getInstance().readInt();
 			switch(choice){
@@ -47,6 +54,18 @@ public class VehicleMain {
 				break;
 			case 8:
 				customerService.deleteCustomer();
+				break;
+			case 9:
+				rentalContractService.insertContract();
+				break;
+			case 10:
+				rentalContractService.getContractById();
+				break;
+			case 11:
+				System.out.println("Service unavailable at the moment.");
+				break;
+			case 12:
+				rentalContractService.deleteContract();
 				break;
 			
 			}
