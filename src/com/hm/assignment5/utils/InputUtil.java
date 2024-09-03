@@ -24,17 +24,23 @@ public class InputUtil {
 		try {
 			return this.reader.readLine();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public int readInt() {
+		return Integer.parseInt(readLine());
+	}
+	
+	public double readDouble() {
+		return Double.parseDouble(readLine());
 	}
 	
 	public void closeReader() {
 		try {
 			this.reader.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

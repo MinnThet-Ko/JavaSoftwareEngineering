@@ -18,7 +18,7 @@ public class VehicleService {
 	
 	public void getVehicle() {
 		System.out.println("Enter vehicle ID:");
-		this.vehicleDAO.getVechicleByID(InputUtil.getInstance().readLine());
+		this.vehicleDAO.getVechicleByID(InputUtil.getInstance().readLine()).displayInfo();;
 	}
 	
 	public void deleteVehicle() {
