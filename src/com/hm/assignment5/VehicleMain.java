@@ -1,78 +1,45 @@
 package com.hm.assignment5;
 
+import com.hm.assignment4.ContractEmployee;
 import com.hm.assignment5.services.CustomerService;
 import com.hm.assignment5.services.RentalContractService;
+import com.hm.assignment5.services.RentalOperations;
 import com.hm.assignment5.services.VehicleService;
 import com.hm.assignment5.utils.InputUtil;
 
 public class VehicleMain {
 
 	public static void main(String[] args) {
-		VehicleService vehicleService =  new VehicleService();
-		CustomerService customerService = new CustomerService();
-		RentalContractService rentalContractService =  new RentalContractService();
-		
+		RentalOperations service;
+
 		boolean willContinue = true;
-		while(willContinue){
-			System.out.println("Enter operation:");
-			System.out.println("1. Register vehicle");
-			System.out.println("2. Find vehicle by ID");
-			System.out.println("3. Update vehicle");
-			System.out.println("4. Delete vehicle");
-			System.out.println("5. Register customer");
-			System.out.println("6. Find customer by ID");
-			System.out.println("7. Update customer");
-			System.out.println("8. Delete customer");
-			System.out.println("9. Register contract");
-			System.out.println("10. Find contract by ID");
-			System.out.println("11. Update contract");
-			System.out.println("12. Delete contract");
-			
-			
+		while (willContinue) {
+
+			System.out.println("What would you want to get service on?");
+			System.out.println("1. Vehicle");
+			System.out.println("2. Customer");
+			System.out.println("3. Contract");
+
 			int choice = InputUtil.getInstance().readInt();
-			switch(choice){
+			switch (choice) {
 			case 1:
-				vehicleService.registerVehicle();
+				service = new VehicleService();
+				service.getProcessType();
 				break;
 			case 2:
-				vehicleService.getVehicle();
+				service = new CustomerService();
+				service.getProcessType();
 				break;
 			case 3:
-				System.out.println("Service unavailable at the moment.");
+				service = new RentalContractService();
+				service.getProcessType();
 				break;
-			case 4:
-				vehicleService.deleteVehicle();
-				break;
-			case 5:
-				customerService.insertCustomer();
-				break;
-			case 6:
-				customerService.getCustomer();
-				break;
-			case 7:
-				customerService.updateCustomer();
-				break;
-			case 8:
-				customerService.deleteCustomer();
-				break;
-			case 9:
-				rentalContractService.insertContract();
-				break;
-			case 10:
-				rentalContractService.getContractById();
-				break;
-			case 11:
-				System.out.println("Service unavailable at the moment.");
-				break;
-			case 12:
-				rentalContractService.deleteContract();
-				break;
-			
+
 			}
 			System.out.println("Do you want to continue?(y/n)");
-			willContinue =  InputUtil.getInstance().readLine().toLowerCase().equals("y");
+			willContinue = InputUtil.getInstance().readLine().toLowerCase().equals("y");
 		}
-		
+
 		InputUtil.getInstance().closeReader();
 
 	}
