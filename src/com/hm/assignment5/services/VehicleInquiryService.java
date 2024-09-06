@@ -4,19 +4,31 @@ package com.hm.assignment5.services;
 import com.hm.assignment5.models.Vehicle;
 import com.hm.assignment5.utils.InputUtil;
 
-public class VehicleInquiryService implements VehicleInquiry {
+public abstract class VehicleInquiryService implements VehicleInquiry {
 
+	private String brand;
+	private String model;
+	
+	public String getBrand() {
+		return this.brand;
+	}
+	
+	public String getModel() {
+		return this.model;
+	}
+	
 	@Override
 	public Vehicle getVehicleInfo() {
-		String brand = null, model = null;
-
 		System.out.println("Enter brand:");
-		brand = InputUtil.getInstance().readLine();
+		this.brand = InputUtil.getInstance().readLine();
 
 		System.out.println("Enter model: ");
-		model = InputUtil.getInstance().readLine();
+		this.model = InputUtil.getInstance().readLine();
+		
+		return getSpecificInfo();
 
-		return new Vehicle(brand, model);
 	}
+	
+	public abstract Vehicle getSpecificInfo();
 
 }

@@ -7,16 +7,11 @@ import com.hm.assignment5.utils.InputUtil;
 public class MotorcycleInquiryService extends VehicleInquiryService {
 
 	@Override
-	public Vehicle getVehicleInfo() {
-		Vehicle baseVehicle = super.getVehicleInfo();
-		boolean hasSidecar = false;
-
+	public Vehicle getSpecificInfo() {
+		// TODO Auto-generated method stub
 		System.out.println("Does it have a side car(y/n):");
-		hasSidecar = InputUtil.getInstance().readLine().toLowerCase().equals("y");
-		baseVehicle = new Motorcycle(baseVehicle.getBrand(), baseVehicle.getModel(), hasSidecar);
-
-		return baseVehicle;
-
+		boolean hasSidecar = InputUtil.getInstance().readLine().toLowerCase().equals("y");
+		return new Motorcycle(super.getBrand(), super.getModel(), hasSidecar);
 	}
 
 }

@@ -2,18 +2,17 @@ package com.hm.assignment5.models;
 
 import java.util.Formatter;
 
+import com.hm.assignment5.dao.VehicleDAO;
+
 public class Vehicle {
 	
-	public static final int MAX_VEHICLES = 1000;
-	private static int vehicleCount = 0;
 	private String brand;
 	private String model;
 	private String id;
 	public Vehicle(String brand,String model) {
 		this.brand = brand;
 		this.model = model;
-		vehicleCount++;
-		this.id = "VHI-"+vehicleCount;
+		this.id = "VHI-"+VehicleDAO.getVechicleCount();
 	}
 
 	public String getBrand() {
@@ -34,9 +33,6 @@ public class Vehicle {
 	
 	public String getId() {
 		return this.id;
-	}
-	public static int getVehicleCount() {
-		return vehicleCount;
 	}
 
 	public void displayInfo(){

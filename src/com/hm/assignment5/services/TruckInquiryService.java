@@ -7,15 +7,11 @@ import com.hm.assignment5.utils.InputUtil;
 public class TruckInquiryService extends VehicleInquiryService {
 
 	@Override
-	public Vehicle getVehicleInfo() {
-		Vehicle baseVehicle = super.getVehicleInfo();
-		double loadCapacity;
+	public Vehicle getSpecificInfo() {
 
 		System.out.println("Enter load capacity:");
-		loadCapacity = Double.parseDouble(InputUtil.getInstance().readLine());
-		baseVehicle = new Truck(baseVehicle.getBrand(), baseVehicle.getModel(), loadCapacity);
-
-		return baseVehicle;
+		double loadCapacity = Double.parseDouble(InputUtil.getInstance().readLine());
+		return new Truck(super.getBrand(), super.getModel(), loadCapacity);
 
 	}
 

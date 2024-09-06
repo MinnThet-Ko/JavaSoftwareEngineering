@@ -4,9 +4,6 @@ import java.util.Formatter;
 
 public class RentalContract {
 	
-	public static final int MAX_CONTRACTS = 1000;
-	private static int contractCount = 0;
-	
 	private String id;
 	private String customerId;
 	private String  vehicleId;
@@ -16,12 +13,6 @@ public class RentalContract {
 		this.customerId = customerId;
 		this.vehicleId = vechicleId;
 		this.duration = duration;
-		contractCount++;
-		this.id = "CON-"+contractCount;
-	}
-
-	public static int getContractCount() {
-		return contractCount;
 	}
 	
 	public String getId() {

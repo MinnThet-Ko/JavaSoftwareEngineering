@@ -4,8 +4,6 @@ import java.util.Formatter;
 
 public class Customer {
 	
-	public static final int MAX_CUSTOMER = 1000;
-	private static int customerCount = 0 ;
 	private String id;
 	private String name;
 	private int age;
@@ -13,8 +11,6 @@ public class Customer {
 	public Customer(String name, int age) {
 		this.name = name;
 		this.age = age;
-		customerCount++;
-		this.id = "CUS-"+customerCount;
 	}
 
 	public String getId() {
@@ -38,9 +34,6 @@ public class Customer {
 		this.age = age;
 	}
 	
-	public static int getCustomerCount() {
-		return customerCount;
-	}
 
 	public void displayInfo() {
 		Formatter formatter = new Formatter();
