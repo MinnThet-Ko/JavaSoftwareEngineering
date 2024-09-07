@@ -4,7 +4,7 @@ import com.hm.assignment5.models.Motorcycle;
 import com.hm.assignment5.models.Vehicle;
 import com.hm.assignment5.utils.InputUtil;
 
-public class MotorcycleInquiryService extends VehicleInquiryService {
+public class MotorcycleInquiry extends VehicleInquiry {
 
 	@Override
 	public Vehicle getSpecificInfo() {

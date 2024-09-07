@@ -24,25 +24,25 @@ public class RentalContractService implements RentalOperations{
 
 		switch (choice) {
 		case 1:
-			performRegisterService();
+			performRegister();
 			break;
 
 		case 2:
-			performRetrieveService();
+			performRetrieve();
 			break;
 
 		case 3:
-			performUpdateService();
+			performUpdate();
 			break;
 
 		case 4:
-			performDeleteService();
+			performDelete();
 			break;
 		}
 	}
 	
 	@Override
-	public void performRegisterService() {
+	public void performRegister() {
 		System.out.println("Enter customer ID");
 		String customerId = InputUtil.getInstance().readLine();
 		System.out.println("Enter vehicle ID");
@@ -50,25 +50,27 @@ public class RentalContractService implements RentalOperations{
 		System.out.println("Enter duration:");
 		int duration = InputUtil.getInstance().readInt();
 		this.rentalContractDAO.insertRentalContract(new RentalContract(customerId, vehicle, duration));
+		RentalContractDAO.increaseContractCount();
 	}
 	
 	@Override
-	public void performRetrieveService() {
+	public void performRetrieve() {
 		System.out.println("Enter contract ID:");
 		String id = InputUtil.getInstance().readLine();
 		this.rentalContractDAO.getContractByID(id).displayInfo();
 	}
 	
 	@Override
-	public void performUpdateService() {
+	public void performUpdate() {
 		System.out.println("Service not available at the moment.");
 	}
 	
 	@Override
-	public void performDeleteService() {
+	public void performDelete() {
 		System.out.println("Enter contract ID:");
 		String id = InputUtil.getInstance().readLine();
 		this.rentalContractDAO.removeRentalContract(id);
+		RentalContractDAO.decreaseContractCount();
 	}
 
 

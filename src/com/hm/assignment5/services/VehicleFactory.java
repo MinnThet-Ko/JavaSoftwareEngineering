@@ -5,7 +5,7 @@ import com.hm.assignment5.utils.InputUtil;
 
 public class VehicleFactory {
 	
-	private VehicleInquiry inquiryService;
+	private Inquiry inquiryService;
 	
 	public Vehicle createVehicle() {
 		getVehicleType();
@@ -17,15 +17,15 @@ public class VehicleFactory {
 		int vehicleType = Integer.parseInt(InputUtil.getInstance().readLine());
 		switch( vehicleType) {
 			case 1:{
-				this.inquiryService =  new CarInquiryService();
+				this.inquiryService =  new CarInquiry();
 				break;
 			}
 			case 2: {
-				this.inquiryService =  new TruckInquiryService();
+				this.inquiryService =  new TruckInquiry();
 				break;
 			}
 			case 3: {
-				this.inquiryService = new MotorcycleInquiryService();
+				this.inquiryService = new MotorcycleInquiry();
 			}
 			default: break;
 		}

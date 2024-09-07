@@ -23,31 +23,32 @@ public class VehicleService implements RentalOperations {
 
 		switch (choice) {
 		case 1:
-			performRegisterService();
+			performRegister();
 			break;
 
 		case 2:
-			performRetrieveService();
+			performRetrieve();
 			break;
 
 		case 3:
-			performUpdateService();
+			performUpdate();
 			break;
 
 		case 4:
-			performDeleteService();
+			performDelete();
 			break;
 		}
 
 	}
 
 	@Override
-	public void performRegisterService() {
+	public void performRegister() {
 		this.vehicleDAO.insertVehicle(this.vehicleFactory.createVehicle());
+		VehicleDAO.increaseVehicleCount();
 	}
 
 	@Override
-	public void performRetrieveService() {
+	public void performRetrieve() {
 		System.out.println("Enter vehicle ID:");
 		this.vehicleDAO.getVechicleByID(InputUtil.getInstance().readLine()).displayInfo();
 	}
@@ -56,14 +57,15 @@ public class VehicleService implements RentalOperations {
 	// It is time consuming to ask the user WHAT they want to update and I want to
 	// move on to other parts of the project.
 	@Override
-	public void performUpdateService() {
+	public void performUpdate() {
 		System.out.println("Service not available at the moment.");
 	}
 
 	@Override
-	public void performDeleteService() {
+	public void performDelete() {
 		System.out.println("Enter vehicle ID:");
 		this.vehicleDAO.removeVehicle(InputUtil.getInstance().readLine());
+		VehicleDAO.decreaseVehicleCount();
 	}
 
 }

@@ -26,35 +26,36 @@ public class CustomerService implements RentalOperations{
 
 		switch (choice) {
 		case 1:
-			performRegisterService();
+			performRegister();
 			break;
 
 		case 2:
-			performRetrieveService();
+			performRetrieve();
 			break;
 
 		case 3:
-			performUpdateService();
+			performUpdate();
 			break;
 
 		case 4:
-			performDeleteService();
+			performDelete();
 			break;
 		}
 	}
 	
 	@Override
-	public void performRegisterService() {
+	public void performRegister() {
 		System.out.println("Enter name:");
 		String name =  InputUtil.getInstance().readLine();
 		System.out.println("Enter age:");
 		int age = InputUtil.getInstance().readInt();
 		
 		this.customerDAO.insertCustomer(new Customer(name, age));
+		CustomerDAO.increaseCustomerCount();
 	}
 	
 	@Override
-	public void performUpdateService() {
+	public void performUpdate() {
 		System.out.println("Select to update:\n1.Name \n2.Age");
 		int choice = InputUtil.getInstance().readInt();
 		System.out.println("Enter ID:");
@@ -72,17 +73,18 @@ public class CustomerService implements RentalOperations{
 	}
 	
 	@Override
-	public void performRetrieveService() {
+	public void performRetrieve() {
 		System.out.println("Enter ID:");
 		String id = InputUtil.getInstance().readLine();
 		this.customerDAO.getCustomerByID(id).displayInfo();
 	}
 	
 	@Override
-	public void performDeleteService() {
+	public void performDelete() {
 		System.out.print("Enter ID:");
 		String id = InputUtil.getInstance().readLine();
 		this.customerDAO.removecustomer(id);
+		CustomerDAO.decreaseCustomerCount();
 	}
 
 	

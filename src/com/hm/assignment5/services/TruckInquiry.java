@@ -4,7 +4,7 @@ import com.hm.assignment5.models.Truck;
 import com.hm.assignment5.models.Vehicle;
 import com.hm.assignment5.utils.InputUtil;
 
-public class TruckInquiryService extends VehicleInquiryService {
+public class TruckInquiry extends VehicleInquiry {
 
 	@Override
 	public Vehicle getSpecificInfo() {
