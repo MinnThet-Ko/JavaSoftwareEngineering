@@ -9,6 +9,19 @@ public class RentalContractDAO {
 
 	private RentalContract[] rentalContractList = new RentalContract[MAX_CONTRACT];
 
+	private static RentalContractDAO rentalContractDAO;
+
+	public RentalContractDAO() {
+
+	}
+
+	public static RentalContractDAO getInstance() {
+		if (rentalContractDAO == null) {
+			rentalContractDAO = new RentalContractDAO();
+		}
+		return rentalContractDAO;
+	}
+
 	public void insertRentalContract(RentalContract rentalContract) {
 		this.rentalContractList[contractCount] = rentalContract;
 	}
@@ -39,15 +52,15 @@ public class RentalContractDAO {
 		}
 	}
 
-	public static void increaseContractCount() {
+	public void increaseContractCount() {
 		contractCount++;
 	}
 
-	public static void decreaseContractCount() {
+	public void decreaseContractCount() {
 		contractCount--;
 	}
 
-	public static int getContractCount() {
+	public int getContractCount() {
 		return contractCount;
 	}
 }

@@ -1,18 +1,13 @@
 package com.hm.assignment5.services;
 
-
+import com.hm.assignment5.dao.CustomerDAO;
 import com.hm.assignment5.dao.RentalContractDAO;
+import com.hm.assignment5.dao.VehicleDAO;
 import com.hm.assignment5.models.RentalContract;
 import com.hm.assignment5.utils.InputUtil;
 
-public class RentalContractService implements RentalOperations{
-	
-	private RentalContractDAO rentalContractDAO;
-	
-	public RentalContractService() {
-		this.rentalContractDAO =  new RentalContractDAO();
-	}
-	
+public class RentalContractService implements RentalOperations {
+
 	@Override
 	public void getProcessType() {
 		System.out.println("Enter operation:");
@@ -40,7 +35,7 @@ public class RentalContractService implements RentalOperations{
 			break;
 		}
 	}
-	
+
 	@Override
 	public void performRegister() {
 		System.out.println("Enter customer ID");
@@ -49,30 +44,40 @@ public class RentalContractService implements RentalOperations{
 		String vehicle = InputUtil.getInstance().readLine();
 		System.out.println("Enter duration:");
 		int duration = InputUtil.getInstance().readInt();
-		this.rentalContractDAO.insertRentalContract(new RentalContract(customerId, vehicle, duration));
-		RentalContractDAO.increaseContractCount();
+		RentalContractDAO.getInstance()
+				.insertRentalContract(new RentalContract(CustomerDAO.getInstance().getCustomerByID(customerId),
+						VehicleDAO.getInstance().getVechicleByID(vehicle), duration));
+		RentalContractDAO.getInstance().increaseContractCount();
 	}
-	
+
 	@Override
 	public void performRetrieve() {
 		System.out.println("Enter contract ID:");
 		String id = InputUtil.getInstance().readLine();
-		this.rentalContractDAO.getContractByID(id).displayInfo();
+		RentalContractDAO.getInstance().getContractByID(id).displayInfo();
 	}
-	
+
 	@Override
 	public void performUpdate() {
 		System.out.println("Service not available at the moment.");
 	}
-	
+
 	@Override
 	public void performDelete() {
 		System.out.println("Enter contract ID:");
 		String id = InputUtil.getInstance().readLine();
-		this.rentalContractDAO.removeRentalContract(id);
-		RentalContractDAO.decreaseContractCount();
+		RentalContractDAO.getInstance().removeRentalContract(id);
+		RentalContractDAO.getInstance().decreaseContractCount();
 	}
 
+	@Override
+	public RentalContract retrieveById() {
+		System.out.println("Enter contract ID:");
+		RentalContract result = RentalContractDAO.getInstance().getContractByID(InputUtil.getInstance().readLine());
+		if (result == null) {
+			retrieveById();
+		}
+		return result;
+	}
 
-	
 }

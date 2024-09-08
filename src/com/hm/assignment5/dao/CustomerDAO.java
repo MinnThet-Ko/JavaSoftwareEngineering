@@ -8,6 +8,18 @@ public class CustomerDAO {
 	public static final int MAX_CUSTOMER = 1000;
 
 	private Customer[] customerList = new Customer[MAX_CUSTOMER];
+	private static CustomerDAO customerDAO;
+
+	public CustomerDAO() {
+
+	}
+
+	public static CustomerDAO getInstance() {
+		if (customerDAO == null) {
+			customerDAO = new CustomerDAO();
+		}
+		return customerDAO;
+	}
 
 	public void insertCustomer(Customer customer) {
 		this.customerList[customerCount] = customer;
@@ -31,22 +43,22 @@ public class CustomerDAO {
 	}
 
 	public void removecustomer(String id) {
-		for (int i = 0; i <customerCount; i++) {
+		for (int i = 0; i < customerCount; i++) {
 			if (this.customerList[i].getId().equals(id)) {
 				this.customerList[i] = null;
 			}
 		}
 	}
 
-	public static void increaseCustomerCount() {
+	public void increaseCustomerCount() {
 		customerCount++;
 	}
 
-	public static void decreaseCustomerCount() {
+	public void decreaseCustomerCount() {
 		customerCount--;
 	}
 
-	public static int getCustomerCount() {
+	public int getCustomerCount() {
 		return customerCount;
 	}
 }

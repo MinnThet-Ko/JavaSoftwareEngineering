@@ -1,12 +1,12 @@
 package com.hm.assignment5.services;
 
 import com.hm.assignment5.dao.VehicleDAO;
+import com.hm.assignment5.models.Vehicle;
 import com.hm.assignment5.utils.InputUtil;
 
 public class VehicleService implements RentalOperations {
 
 	private VehicleFactory vehicleFactory;
-	private VehicleDAO vehicleDAO;
 
 	public VehicleService() {
 		this.vehicleFactory = new VehicleFactory();
@@ -43,14 +43,14 @@ public class VehicleService implements RentalOperations {
 
 	@Override
 	public void performRegister() {
-		this.vehicleDAO.insertVehicle(this.vehicleFactory.createVehicle());
-		VehicleDAO.increaseVehicleCount();
+		VehicleDAO.getInstance().insertVehicle(this.vehicleFactory.createVehicle());
+		VehicleDAO.getInstance().increaseVehicleCount();
 	}
 
 	@Override
 	public void performRetrieve() {
 		System.out.println("Enter vehicle ID:");
-		this.vehicleDAO.getVechicleByID(InputUtil.getInstance().readLine()).displayInfo();
+		VehicleDAO.getInstance().getVechicleByID(InputUtil.getInstance().readLine()).displayInfo();
 	}
 
 	// I'll leave the update method for now.
@@ -64,8 +64,18 @@ public class VehicleService implements RentalOperations {
 	@Override
 	public void performDelete() {
 		System.out.println("Enter vehicle ID:");
-		this.vehicleDAO.removeVehicle(InputUtil.getInstance().readLine());
-		VehicleDAO.decreaseVehicleCount();
+		VehicleDAO.getInstance().removeVehicle(InputUtil.getInstance().readLine());
+		VehicleDAO.getInstance().decreaseVehicleCount();
+	}
+
+	@Override
+	public Vehicle retrieveById() {
+		System.out.println("Enter vehicle ID:");
+		Vehicle result = VehicleDAO.getInstance().getVechicleByID(InputUtil.getInstance().readLine());
+		if (result == null) {
+			retrieveById();
+		}
+		return result;
 	}
 
 }

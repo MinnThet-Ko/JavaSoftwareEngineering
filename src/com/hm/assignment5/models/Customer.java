@@ -2,6 +2,8 @@ package com.hm.assignment5.models;
 
 import java.util.Formatter;
 
+import com.hm.assignment5.dao.CustomerDAO;
+
 public class Customer {
 	
 	private String id;
@@ -11,6 +13,7 @@ public class Customer {
 	public Customer(String name, int age) {
 		this.name = name;
 		this.age = age;
+		this.id = "CUS-"+CustomerDAO.getInstance().getCustomerCount();
 	}
 
 	public String getId() {

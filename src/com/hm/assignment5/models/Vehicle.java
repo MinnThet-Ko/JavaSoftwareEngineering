@@ -12,7 +12,7 @@ public class Vehicle {
 	public Vehicle(String brand,String model) {
 		this.brand = brand;
 		this.model = model;
-		this.id = "VHI-"+VehicleDAO.getVechicleCount();
+		this.id = "VHI-"+VehicleDAO.getInstance().getVechicleCount();
 	}
 
 	public String getBrand() {

@@ -9,11 +9,7 @@ import com.hm.assignment5.utils.InputUtil;
  */
 public class CustomerService implements RentalOperations{
 	
-	private CustomerDAO customerDAO;
 	
-	public CustomerService() {
-		this.customerDAO = new CustomerDAO();
-	}
 	
 	@Override
 	public void getProcessType() {
@@ -50,8 +46,8 @@ public class CustomerService implements RentalOperations{
 		System.out.println("Enter age:");
 		int age = InputUtil.getInstance().readInt();
 		
-		this.customerDAO.insertCustomer(new Customer(name, age));
-		CustomerDAO.increaseCustomerCount();
+		CustomerDAO.getInstance().insertCustomer(new Customer(name, age));
+		CustomerDAO.getInstance().increaseCustomerCount();
 	}
 	
 	@Override
@@ -60,7 +56,7 @@ public class CustomerService implements RentalOperations{
 		int choice = InputUtil.getInstance().readInt();
 		System.out.println("Enter ID:");
 		String id = InputUtil.getInstance().readLine();
-		Customer currentCustomer = this.customerDAO.getCustomerByID(id);
+		Customer currentCustomer = CustomerDAO.getInstance().getCustomerByID(id);
 		if(choice == 1) {
 			System.out.println("Enter name:");
 			String name = InputUtil.getInstance().readLine();
@@ -76,19 +72,27 @@ public class CustomerService implements RentalOperations{
 	public void performRetrieve() {
 		System.out.println("Enter ID:");
 		String id = InputUtil.getInstance().readLine();
-		this.customerDAO.getCustomerByID(id).displayInfo();
+		CustomerDAO.getInstance().getCustomerByID(id).displayInfo();
 	}
 	
 	@Override
 	public void performDelete() {
 		System.out.print("Enter ID:");
 		String id = InputUtil.getInstance().readLine();
-		this.customerDAO.removecustomer(id);
-		CustomerDAO.decreaseCustomerCount();
+		CustomerDAO.getInstance().removecustomer(id);
+		CustomerDAO.getInstance().decreaseCustomerCount();
 	}
 
 	
-	
+	@Override
+		public Customer retrieveById() {
+		System.out.println("Enter customer ID:");
+		Customer result = CustomerDAO.getInstance().getCustomerByID(InputUtil.getInstance().readLine());
+		if(result == null) {
+			retrieveById();
+		}
+		return result;
+		}
 	
 	
 	

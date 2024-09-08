@@ -8,6 +8,18 @@ public class VehicleDAO {
 	private static final int MAX_VEHICLE = 1000;
 
 	private Vehicle[] vehicleList = new Vehicle[MAX_VEHICLE];
+	private static VehicleDAO vehicleDAO;
+
+	public VehicleDAO() {
+
+	}
+
+	public static VehicleDAO getInstance() {
+		if (vehicleDAO == null) {
+			vehicleDAO = new VehicleDAO();
+		}
+		return vehicleDAO;
+	}
 
 	public void insertVehicle(Vehicle vehicle) {
 		this.vehicleList[vechicleCount] = vehicle;
@@ -39,15 +51,15 @@ public class VehicleDAO {
 		}
 	}
 
-	public static void increaseVehicleCount() {
+	public void increaseVehicleCount() {
 		vechicleCount++;
 	}
 
-	public static void decreaseVehicleCount() {
+	public void decreaseVehicleCount() {
 		vechicleCount--;
 	}
 
-	public static int getVechicleCount() {
+	public int getVechicleCount() {
 		return vechicleCount;
 	}
 }
