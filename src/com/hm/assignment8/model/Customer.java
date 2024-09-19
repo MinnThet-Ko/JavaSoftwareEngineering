@@ -5,16 +5,26 @@ import java.util.List;
 
 public class Customer {
 	
+	private String customerID;
 	private String name;
-	private String nrc;
-	private String passportID;
 	private List<Booking> bookingList;
-
-	public Customer(String name, String nrc, String passportID) {
+	
+	public Customer() {
+		
+	}
+	
+	public Customer(String customerID,String name, List<Booking> bookingList) {
+		this.customerID = customerID;
 		this.name = name;
-		this.nrc = nrc;
-		this.passportID = passportID;
 		this.bookingList = new ArrayList<>();
+	}
+
+	public String getCustomerID() {
+		return customerID;
+	}
+
+	public void setCustomerID(String customerID) {
+		this.customerID = customerID;
 	}
 
 	public String getName() {
@@ -23,22 +33,6 @@ public class Customer {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getNrc() {
-		return nrc;
-	}
-
-	public void setNrc(String nrc) {
-		this.nrc = nrc;
-	}
-
-	public String getPassportID() {
-		return passportID;
-	}
-
-	public void setPassportID(String passportID) {
-		this.passportID = passportID;
 	}
 
 	public List<Booking> getBookingList() {

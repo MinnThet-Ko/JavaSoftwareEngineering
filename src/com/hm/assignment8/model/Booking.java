@@ -7,18 +7,28 @@ public class Booking {
 	private Customer customer;
 	private Seat seat;
 	private Flight flight;
+	private FlightSchedule flightSchedule;
 	
-	public Booking(Customer customer, Seat seat, Flight flight) {
+	public Booking() {
+		
+	}
+
+	public Booking(String bookingID, Customer customer, Seat seat, Flight flight, FlightSchedule flightSchedule) {
+		this.bookingID = bookingID;
 		this.customer = customer;
 		this.seat = seat;
 		this.flight = flight;
-		this.bookingID = "B-"+(int)(Math.random()* 1000+1);
+		this.flightSchedule = flightSchedule;
 	}
 
 	public String getBookingID() {
 		return bookingID;
 	}
-	
+
+	public void setBookingID(String bookingID) {
+		this.bookingID = bookingID;
+	}
+
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -42,10 +52,19 @@ public class Booking {
 	public void setFlight(Flight flight) {
 		this.flight = flight;
 	}
-	
+
+	public FlightSchedule getFlightSchedule() {
+		return flightSchedule;
+	}
+
+	public void setFlightSchedule(FlightSchedule flightSchedule) {
+		this.flightSchedule = flightSchedule;
+	}
+
 	public void showBookingInfo() {
 		Formatter formatter = new Formatter();
-		formatter.format("Booking ID: %s\nCustomer : %s\nSeat: %s\nFlight: 5s", this.bookingID, this.customer.getName(), this.seat.getSeatNo(), this.flight.getFlightID());
+		formatter.format("Booking ID: %s\nCustomer : %s\nSeat: %s\nFlight: 5s", this.bookingID, this.customer.getName(),
+				this.seat.getSeatNo(), this.flight.getFlightID());
 		System.out.println(formatter);
 		formatter.close();
 	}

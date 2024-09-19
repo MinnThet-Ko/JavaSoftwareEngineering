@@ -30,7 +30,7 @@ public class DatabaseUtil {
 	public Connection getConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			this.connection = DriverManager.getConnection(this.dbProperties.getProperty("url"), this.dbProperties.getProperty("username"), this.dbProperties.getProperty("passwords"));
+			this.connection = DriverManager.getConnection(this.dbProperties.getProperty("url"), this.dbProperties.getProperty("username"), this.dbProperties.getProperty("password"));
 			return this.connection;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

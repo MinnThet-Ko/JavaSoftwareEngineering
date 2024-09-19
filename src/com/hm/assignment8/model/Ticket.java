@@ -2,15 +2,16 @@ package com.hm.assignment8.model;
 
 import java.util.Formatter;
 
-import com.hm.assignment8.utils.IDGenerator;
-
 public class Ticket {
 	private String ticketID;
 	private Booking booking;
 
+	public Ticket() {
+		
+	}
 	
-	public Ticket(Booking booking) {
-		this.ticketID = "TKT-"+IDGenerator.generateRandomNumber();
+	public Ticket(String ticketID, Booking booking) {
+		this.ticketID = ticketID;
 		this.booking = booking;
 	}
 
