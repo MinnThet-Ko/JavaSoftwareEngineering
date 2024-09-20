@@ -11,7 +11,7 @@ import com.hm.assignment8.model.Flight;
 import com.hm.assignment8.model.Seat;
 import com.hm.assignment8.utils.DatabaseUtil;
 
-public class SeatDAO {
+public class SeatDAO implements FlightManagementDAO<Seat>{
 	
 	public List<Seat> getAvailableSeat(String flightID, String routeID){
 		List<Seat> resultSeatList = new ArrayList<>();
@@ -40,5 +40,35 @@ public class SeatDAO {
 			e.printStackTrace();
 		}
 		return resultSeatList;
+	}
+
+	@Override
+	public List<Seat> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean insert(Object... parameters) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(Object... parameters) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(Object... parameters) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Seat select(Object... parameters) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

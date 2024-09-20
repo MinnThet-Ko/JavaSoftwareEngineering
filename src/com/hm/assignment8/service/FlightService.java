@@ -1,6 +1,5 @@
 package com.hm.assignment8.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.hm.assignment8.dao.FlightDAO;
@@ -21,7 +20,7 @@ public class FlightService {
 	}
 
 	public void displayAllFlightSchedule() {
-		List<FlightSchedule> scheduleList = this.flightScheduleDAO.getAllFlightSchedules();
+		List<FlightSchedule> scheduleList = this.flightScheduleDAO.getAll();
 		for (FlightSchedule fs : scheduleList) {
 			fs.displayScheduleInfo();
 		}

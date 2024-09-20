@@ -12,9 +12,10 @@ import com.hm.assignment8.model.FlightSchedule;
 import com.hm.assignment8.model.Route;
 import com.hm.assignment8.utils.DatabaseUtil;
 
-public class FlightScheduleDAO {
+public class FlightScheduleDAO implements FlightManagementDAO<FlightSchedule>{
 
-	public List<FlightSchedule> getAllFlightSchedules() {
+	@Override
+	public List<FlightSchedule> getAll() {
 		List<FlightSchedule> resultScheduleList = new ArrayList<>();
 		String query = "select * from flight_schedule where departure_date > ?";
 		try {
@@ -40,12 +41,31 @@ public class FlightScheduleDAO {
 		return resultScheduleList;
 	}
 
-	public FlightSchedule getFlightScheduleByID(String scheduleID) {
+	@Override
+	public boolean insert(Object... parameters) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(Object... parameters) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(Object... parameters) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public FlightSchedule select(Object... parameters) {
 		List<FlightSchedule> resultScheduleList = new ArrayList<>();
 		String query = "select * from flight_schedule where schedule_id = ?";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setObject(1, scheduleID);
+			statement.setObject(1, (String)parameters[0]);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				FlightSchedule fs = new FlightSchedule();

@@ -2,6 +2,7 @@ package com.hm.assignment8.service;
 
 import com.hm.assignment8.model.Customer;
 
+import java.util.Date;
 import java.util.List;
 
 import com.hm.assignment8.dao.BookingDAO;
@@ -15,6 +16,7 @@ import com.hm.assignment8.model.FlightSchedule;
 import com.hm.assignment8.model.Route;
 import com.hm.assignment8.model.Seat;
 import com.hm.assignment8.model.Ticket;
+import com.hm.assignment8.utils.IDGenerator;
 import com.hm.assignment8.utils.InputUtil;
 
 public class BookingService {
@@ -34,9 +36,15 @@ public class BookingService {
 	}
 
 	public void saveBooking() {
-		FlightSchedule schedule = this.flightScheduleDAO.getFlightScheduleByID("");
-		Customer customer = this.customerDAO.getCustomerByID("");
-		this.bookingDAO.saveBooking("", null, null, null, null, 0, null);
+		FlightSchedule schedule = this.flightScheduleDAO.select("");
+		Customer customer = this.customerDAO.select("");
+		boolean result = this.bookingDAO.insert("B"+IDGenerator.generateRandomNumber(), "SCH0001", "C001", "S001", "F001", 100.0, new Date());
+		System.out.println(result?"Booking successful":"Booking unsuccessful");
+	}
+	
+	public void deleteBooking() {
+		boolean result = this.bookingDAO.delete("B35");
+		System.out.println(result?"Delete successful":"Delete unsuccessful");
 	}
 
 	public List<Flight> searchFlights(List<Flight> flightList, Route route) {
@@ -44,7 +52,7 @@ public class BookingService {
 	}
 
 	public Flight getFlight(String flightID) {
-		return this.flightDAO.getFlightByID(flightID);
+		return this.flightDAO.select(flightID);
 	}
 
 }

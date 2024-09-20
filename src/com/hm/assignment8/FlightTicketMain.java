@@ -13,6 +13,8 @@ public class FlightTicketMain {
 		flightService.displayAllFlightSchedule();
 		flightService.displayAvailableSeats();
 		
+		bookingService.deleteBooking();
+		
 	}
 
 }
