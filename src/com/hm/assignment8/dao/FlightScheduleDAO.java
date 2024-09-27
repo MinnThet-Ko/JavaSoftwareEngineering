@@ -42,30 +42,30 @@ public class FlightScheduleDAO implements FlightManagementDAO<FlightSchedule>{
 	}
 
 	@Override
-	public boolean insert(Object... parameters) {
+	public boolean insert(FlightSchedule parameters) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean update(Object... parameters) {
+	public boolean update(FlightSchedule parameters) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Object... parameters) {
+	public boolean delete(FlightSchedule parameters) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public FlightSchedule select(Object... parameters) {
+	public FlightSchedule select(FlightSchedule parameters) {
 		List<FlightSchedule> resultScheduleList = new ArrayList<>();
 		String query = "select * from flight_schedule where schedule_id = ?";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setObject(1, (String)parameters[0]);
+			statement.setObject(1, parameters.getScheduleID());
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				FlightSchedule fs = new FlightSchedule();

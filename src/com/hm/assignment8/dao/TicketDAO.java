@@ -18,14 +18,14 @@ public class TicketDAO implements FlightManagementDAO<Ticket>{
 	}
 
 	@Override
-	public boolean insert(Object... parameters) {
+	public boolean insert(Ticket parameters) {
 		String qurey = "insert into ticket(ticket_id, booking_id, boarding_time) "
 				+ "values (?,?,?);";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(qurey);
-			statement.setString(1, (String) parameters[0]);
-			statement.setString(2, (String) parameters[1]);
-			statement.setTimestamp(3, new Timestamp(((Date)parameters[2]).getTime()));
+			statement.setString(1, parameters.getTicketID());
+			statement.setString(2, parameters.getBooking().getBookingID());
+			statement.setTimestamp(3, new Timestamp(parameters.getBooking().getDepartureDate() .getTime()));
 			return statement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -34,17 +34,17 @@ public class TicketDAO implements FlightManagementDAO<Ticket>{
 	}
 
 	@Override
-	public boolean update(Object... parameters) {
+	public boolean update(Ticket parameters) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Object... parameters) {
+	public boolean delete(Ticket parameters) {
 		String qurey = "delete from ticket where ticket_id = ?";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(qurey);
-			statement.setString(1, (String)parameters[0]);
+			statement.setString(1, parameters.getTicketID());
 			return statement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class TicketDAO implements FlightManagementDAO<Ticket>{
 	}
 
 	@Override
-	public Ticket select(Object... parameters) {
+	public Ticket select(Ticket parameters) {
 		// TODO Auto-generated method stub
 		return null;
 	}

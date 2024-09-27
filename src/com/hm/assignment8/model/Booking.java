@@ -1,5 +1,6 @@
 package com.hm.assignment8.model;
 
+import java.util.Date;
 import java.util.Formatter;
 
 public class Booking {
@@ -8,6 +9,8 @@ public class Booking {
 	private Seat seat;
 	private Flight flight;
 	private FlightSchedule flightSchedule;
+	private double price;
+	private Date departureDate;
 	
 	public Booking() {
 		
@@ -59,6 +62,22 @@ public class Booking {
 
 	public void setFlightSchedule(FlightSchedule flightSchedule) {
 		this.flightSchedule = flightSchedule;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public Date getDepartureDate() {
+		return departureDate;
+	}
+
+	public void setDepartureDate(Date departureDate) {
+		this.departureDate = departureDate;
 	}
 
 	public void showBookingInfo() {

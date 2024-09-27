@@ -49,25 +49,25 @@ public class SeatDAO implements FlightManagementDAO<Seat>{
 	}
 
 	@Override
-	public boolean insert(Object... parameters) {
+	public boolean insert(Seat parameters) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean update(Object... parameters) {
+	public boolean update(Seat parameters) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Object... parameters) {
+	public boolean delete(Seat parameters) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Seat select(Object... parameters) {
+	public Seat select(Seat parameters) {
 		// TODO Auto-generated method stub
 		return null;
 	}

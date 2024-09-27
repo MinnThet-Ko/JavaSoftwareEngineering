@@ -1,12 +1,12 @@
-package com.hm.assignment8.dao;
+package com.cinema.dao;
 
 import java.util.List;
 
-public interface FlightManagementDAO<T>{
+public interface AbstractDAO<T>{
 	public  List<T> getAll();
 	public boolean insert(T parameters);
 	public boolean update(T parameters);
 	public boolean delete(T parameters);
-	public T select(T parameters);
+	public T selectByID(int i);
 
 }

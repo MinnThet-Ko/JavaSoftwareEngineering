@@ -38,4 +38,13 @@ public class City {
 		System.out.println(formatter);
 		formatter.close();
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Name:  %s", this.cityName);
+	}
+
+	public boolean equals(City c) {
+		return this.cityID.equals(c.getCityID());
+	}
 }
