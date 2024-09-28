@@ -9,7 +9,7 @@ public class DatabaseUtil {
 	private static DatabaseUtil databaseUtil;
 	private Properties dbProperties;
 	private Connection connection;
-	
+
 	private DatabaseUtil() {
 		this.dbProperties = new Properties();
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -19,32 +19,35 @@ public class DatabaseUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static DatabaseUtil getInstance() {
-		if(databaseUtil == null) {
+		if (databaseUtil == null) {
 			databaseUtil = new DatabaseUtil();
 		}
 		return databaseUtil;
 	}
-	
+
 	public Connection getConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			this.connection = DriverManager.getConnection(this.dbProperties.getProperty("url"), this.dbProperties.getProperty("username"), this.dbProperties.getProperty("password"));
+			if (this.connection.isClosed()) {
+				this.connection = DriverManager.getConnection(this.dbProperties.getProperty("url"),
+						this.dbProperties.getProperty("username"), this.dbProperties.getProperty("password"));
+			}
 			return this.connection;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	public void closeConnection() {
 		try {
 			this.connection.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

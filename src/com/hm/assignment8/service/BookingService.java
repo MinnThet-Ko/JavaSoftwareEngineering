@@ -26,50 +26,7 @@ import com.hm.assignment8.utils.InputUtil;
 
 public class BookingService {
 
-//	private FlightDAO flightDAO;
-//	private FlightScheduleDAO flightScheduleDAO;
-//	private CustomerDAO customerDAO;
-//	private BookingDAO bookingDAO;
-//	private TicketDAO ticketDAO;
-//	private CityDAO cityDAO;
-//	private RouteDAO routeDAO;
-//
-//	private City startCity;
-//	private City endCity;
-//	private List<Route> visitedRoutes = new ArrayList<>();
-//	private List<City> visitedCity = new ArrayList<>();
-//	private List<List<Route>> possibleRoutes = new ArrayList<>();
-//	private Stack<Route> adjRoutes = new Stack<>();
-//	private Stack<City> adjCitues = new Stack<>();
-//	
-//	public BookingService() {
-//		this.flightDAO = new FlightDAO();
-//		this.flightScheduleDAO = new FlightScheduleDAO();
-//		this.customerDAO = new CustomerDAO();
-//		this.bookingDAO = new BookingDAO();
-//		this.cityDAO = new CityDAO();
-//		this.routeDAO = new RouteDAO();
-//	}
-//
-//	public void saveBooking() {
-//		FlightSchedule schedule = this.flightScheduleDAO.select("");
-//		Customer customer = this.customerDAO.select("");
-//		boolean result = this.bookingDAO.insert("B"+IDGenerator.generateRandomNumber(), "SCH0001", "C001", "S001", "F001", 100.0, new Date());
-//		System.out.println(result?"Booking successful":"Booking unsuccessful");
-//	}
-//	
-//	public void deleteBooking() {
-//		boolean result = this.bookingDAO.delete("B35");
-//		System.out.println(result?"Delete successful":"Delete unsuccessful");
-//	}
-//
-//	public List<Flight> searchFlights(List<Flight> flightList, Route route) {
-//		return null;
-//	} 
-//
-//	public Flight getFlight(String flightID) {
-//		return this.flightDAO.select(flightID);
-//	}
+	
 	
 	
 

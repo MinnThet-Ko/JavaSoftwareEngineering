@@ -94,8 +94,8 @@ public class RouteService {
 		City secondCity = new City();
 		secondCity.setCityID("C004");
 
-		this.startCity = this.cityDAO.select(firstCity);
-		this.endCity = this.cityDAO.select(secondCity);
+		this.startCity = this.cityDAO.selectByID(firstCity.getCityID());
+		this.endCity = this.cityDAO.selectByID(secondCity.getCityID());
 		this.pointerCity = this.startCity;
 		findAllRoutes();
 

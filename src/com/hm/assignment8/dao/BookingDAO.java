@@ -15,8 +15,20 @@ import com.hm.assignment8.model.FlightSchedule;
 import com.hm.assignment8.model.Seat;
 import com.hm.assignment8.utils.DatabaseUtil;;
 
-public class BookingDAO implements FlightManagementDAO<Booking> {
+public class BookingDAO implements BaseDAO<Booking> {
 
+	private CustomerDAO customerDAO;
+	private SeatDAO seatDAO;
+	private FlightDAO flightDAO;
+	private FlightScheduleDAO flightScheduleDAO;
+	
+	public BookingDAO() {
+		this.customerDAO =  new CustomerDAO();
+		this.seatDAO = new SeatDAO();
+		this.flightDAO = new FlightDAO();
+		this.flightScheduleDAO = new FlightScheduleDAO();
+	}
+	
 	@Override
 	public List<Booking> getAll() {
 		String query = "select * from Booking";
@@ -34,8 +46,8 @@ public class BookingDAO implements FlightManagementDAO<Booking> {
 				b.setPrice(rs.getDouble("price"));
 				b.setDepartureDate(rs.getDate("departure_date"));
 
-				c.setCustomerID(rs.getString("customer_id"));
-				b.setCustomer(c);
+				c.setCustomerID();
+				b.setCustomer(this.customerDAO.select(c));
 
 				s.setSeatNo(rs.getString("seat_id"));
 				b.setSeat(s);
@@ -57,8 +69,11 @@ public class BookingDAO implements FlightManagementDAO<Booking> {
 
 	@Override
 	public boolean insert(Booking parameters) {
-		String query = "insert into booking (booking_id, customer_id, schedule_id, seat_id, flight_id, price, departure_date ) "
-				+ "values (?,?,?,?,?,?,?)";
+		String query = "insert into booking (booking_id, customer_id, schedule_id, seat_id, flight_id, price, departure_date ) \r\n"
+				+ "values (?,?,?,?,?,?,?)\r\n"
+				+ "on conflict (booking_id)\r\n"
+				+ "do update\r\n"
+				+ "set customer_id = EXCLUDED.customer_id, schedule_id = EXCLUDED.schedule_id, seat_id = EXCLUDED.seat_id, flight_id = EXCLUDED.flight_id, price = EXCLUDED.price, departure_date = EXCLUDED.departure_date;";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
 			statement.setString(1, parameters.getBookingID());
@@ -77,28 +92,14 @@ public class BookingDAO implements FlightManagementDAO<Booking> {
 		return false;
 	}
 
-	@Override
-	public boolean update(Booking parameters) {
-//		String query = "update Booking set Booking_name = ? where Booking_id = ?";
-//		try {
-//			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-//			statement.setString(1, parameters.getBookingName());
-//			statement.setString(2, parameters.getBookingID());
-//			statement.executeUpdate();
-//			DatabaseUtil.getInstance().closeConnection();
-//			return true;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-		return false;
-	}
+
 
 	@Override
-	public boolean delete(Booking parameters) {
+	public boolean delete(String id) {
 		String query = "delete from booking where booking_id = ?";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setString(1, parameters.getBookingID());
+			statement.setString(1, id);
 			statement.executeUpdate();
 			DatabaseUtil.getInstance().closeConnection();
 			return true;
@@ -109,11 +110,12 @@ public class BookingDAO implements FlightManagementDAO<Booking> {
 	}
 
 	@Override
-	public Booking select(Booking parameters) {
+	public Booking selectByID(String ID) {
 		String query = "select * from booking where booking_id = ?";
 		List<Booking> resultList = new ArrayList<>();
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
+			statement.setString(1, ID);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				Booking b = new Booking();

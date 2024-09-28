@@ -9,7 +9,7 @@ import java.util.List;
 import com.hm.assignment8.model.City;
 import com.hm.assignment8.utils.DatabaseUtil;
 
-public class CityDAO implements FlightManagementDAO<City>{
+public class CityDAO implements BaseDAO<City>{
 
 	@Override
 	public List<City> getAll() {
@@ -48,28 +48,14 @@ public class CityDAO implements FlightManagementDAO<City>{
 		return false;
 	}
 
-	@Override
-	public boolean update(City parameters) {
-		String query = "update city set city_name = ? where city_id = ?";
-		try {
-			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setString(1, parameters.getCityName());
-			statement.setString(2, parameters.getCityID());
-			statement.executeUpdate();
-			DatabaseUtil.getInstance().closeConnection();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+
 
 	@Override
-	public boolean delete(City parameters) {
+	public boolean delete(String id) {
 		String query = "delete from city where city_id = ?";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setString(1, parameters.getCityID());
+			statement.setString(1, id);
 			statement.executeUpdate();
 			DatabaseUtil.getInstance().closeConnection();
 			return true;
@@ -80,13 +66,13 @@ public class CityDAO implements FlightManagementDAO<City>{
 	}
 
 	@Override
-	public City select(City parameters) {
+	public City selectByID(String ID) {
 		City resultCity = new City();
 
 		String query = "select * from city where city_id = (?)";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setString(1, parameters.getCityID());
+			statement.setString(1, ID);
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
 				resultCity.setCityID(rs.getString(1));

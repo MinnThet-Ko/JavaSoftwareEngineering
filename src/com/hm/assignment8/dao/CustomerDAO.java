@@ -9,7 +9,7 @@ import java.util.List;
 import com.hm.assignment8.model.Customer;
 import com.hm.assignment8.utils.DatabaseUtil;
 
-public class CustomerDAO implements FlightManagementDAO<Customer> {
+public class CustomerDAO implements BaseDAO<Customer> {
 
 	@Override
 	public List<Customer> getAll() {
@@ -48,28 +48,14 @@ public class CustomerDAO implements FlightManagementDAO<Customer> {
 		return false;
 	}
 
-	@Override
-	public boolean update(Customer parameters) {
-		String query = "update customer set customer_name = ? where customer_id = ?";
-		try {
-			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setString(1, parameters.getName());
-			statement.setString(2, parameters.getCustomerID());
-			statement.executeUpdate();
-			DatabaseUtil.getInstance().closeConnection();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+	
 
 	@Override
-	public boolean delete(Customer parameters) {
+	public boolean delete(String id) {
 		String query = "delete from customer where customer_id = ?";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setString(1, parameters.getCustomerID());
+			statement.setString(1, id);
 			statement.executeUpdate();
 			DatabaseUtil.getInstance().closeConnection();
 			return true;
@@ -80,12 +66,12 @@ public class CustomerDAO implements FlightManagementDAO<Customer> {
 	}
 
 	@Override
-	public Customer select(Customer parameters) {
+	public Customer selectByID(String ID) {
 		Customer resultCustomer = new Customer();
 		try {
 			String selectFlight = "select * from customer where customer_id = ?";
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(selectFlight);
-			statement.setObject(1, parameters.getCustomerID());
+			statement.setObject(1, ID);
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {

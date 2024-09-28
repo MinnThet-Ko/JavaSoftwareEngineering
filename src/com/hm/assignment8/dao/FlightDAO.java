@@ -9,7 +9,7 @@ import java.util.List;
 import com.hm.assignment8.model.Flight;
 import com.hm.assignment8.utils.DatabaseUtil;
 
-public class FlightDAO implements FlightManagementDAO<Flight> {
+public class FlightDAO implements BaseDAO<Flight> {
 
 	@Override
 	public List<Flight> getAll() {
@@ -48,28 +48,14 @@ public class FlightDAO implements FlightManagementDAO<Flight> {
 		return false;
 	}
 
-	@Override
-	public boolean update(Flight parameters) {
-		String query = "update flight set flight_name = ? where flight_id = ?";
-		try {
-			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setString(1, parameters.getFlightName());
-			statement.setString(2, parameters.getFlightID());
-			statement.executeUpdate();
-			DatabaseUtil.getInstance().closeConnection();
-			return true;
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-		return false;
-	}
+	
 
 	@Override
-	public boolean delete(Flight parameters) {
+	public boolean delete(String id) {
 		String query = "delete from flight where flight_id = ?";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setString(1, parameters.getFlightID());
+			statement.setString(1, id);
 			statement.executeUpdate();
 			DatabaseUtil.getInstance().closeConnection();
 			return true;
@@ -80,12 +66,12 @@ public class FlightDAO implements FlightManagementDAO<Flight> {
 	}
 
 	@Override
-	public Flight select(Flight parameters) {
+	public Flight selectByID(String ID) {
 		Flight resultFlight = new Flight();
 		try {
 			String selectFlight = "select * from flight where flight_id = ?";
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(selectFlight);
-			statement.setObject(1, parameters.getFlightID());
+			statement.setObject(1, ID);
 			ResultSet resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {

@@ -12,7 +12,7 @@ import com.hm.assignment8.model.FlightSchedule;
 import com.hm.assignment8.model.Route;
 import com.hm.assignment8.utils.DatabaseUtil;
 
-public class FlightScheduleDAO implements FlightManagementDAO<FlightSchedule>{
+public class FlightScheduleDAO implements BaseDAO<FlightSchedule>{
 
 	@Override
 	public List<FlightSchedule> getAll() {
@@ -43,29 +43,46 @@ public class FlightScheduleDAO implements FlightManagementDAO<FlightSchedule>{
 
 	@Override
 	public boolean insert(FlightSchedule parameters) {
-		// TODO Auto-generated method stub
+		String query = "insert into flight_schedule (schedule_id, flight_id, route_id, departure_date ) \r\n"
+				+ "values (?,?,?,?)\r\n";
+		try {
+			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
+			statement.setString(1, parameters.getScheduleID());
+			statement.setString(2, parameters.getFlight().getFlightID());
+			statement.setString(3, parameters.getRoute().getRouteID());
+			statement.setTimestamp(4,new Timestamp(parameters.getDepartureTime().getTime()) );
+			statement.executeUpdate();
+			DatabaseUtil.getInstance().closeConnection();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+
+	@Override
+	public boolean delete(String id) {
+		String query = "delete from flight_schedule where schedule_id = ?";
+		try {
+			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
+			statement.setString(1, id);
+			statement.executeUpdate();
+			DatabaseUtil.getInstance().closeConnection();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
 	@Override
-	public boolean update(FlightSchedule parameters) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(FlightSchedule parameters) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public FlightSchedule select(FlightSchedule parameters) {
+	public FlightSchedule selectByID(String ID) {
 		List<FlightSchedule> resultScheduleList = new ArrayList<>();
 		String query = "select * from flight_schedule where schedule_id = ?";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
-			statement.setObject(1, parameters.getScheduleID());
+			statement.setObject(1, ID);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				FlightSchedule fs = new FlightSchedule();
