@@ -1,30 +1,55 @@
 package com.hm.assignment8.service;
 
-import com.hm.assignment8.model.Customer;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Stack;
 
-import com.hm.assignment8.dao.BookingDAO;
-import com.hm.assignment8.dao.CityDAO;
-import com.hm.assignment8.dao.CustomerDAO;
-import com.hm.assignment8.dao.FlightDAO;
-import com.hm.assignment8.dao.FlightScheduleDAO;
-import com.hm.assignment8.dao.RouteDAO;
-import com.hm.assignment8.dao.TicketDAO;
+import com.hm.assignment8.dao.BaseDAO;
 import com.hm.assignment8.model.Booking;
-import com.hm.assignment8.model.City;
-import com.hm.assignment8.model.Flight;
-import com.hm.assignment8.model.FlightSchedule;
-import com.hm.assignment8.model.Route;
-import com.hm.assignment8.model.Seat;
-import com.hm.assignment8.model.Ticket;
+import com.hm.assignment8.utils.ClassWrapperUtil;
 import com.hm.assignment8.utils.IDGenerator;
 import com.hm.assignment8.utils.InputUtil;
 
-public class BookingService {
+public class BookingService extends BaseService<Booking>{
+
+	public BookingService(BaseDAO<Booking> dao) {
+		super(dao);
+	}
+
+	@Override
+	public String getEntityType() {
+		return "booking";
+	}
+
+	@Override
+	public void register() {
+		Booking booking = new Booking();
+		booking.setBookingID("B"+IDGenerator.generateRandomNumber());
+		
+		System.out.println("Enter customer ID:");
+		String customerID = InputUtil.getInstance().readLine();
+		booking.setCustomer(ClassWrapperUtil.wrapCustomer(customerID));
+		
+		System.out.println("Enter fight schedule ID:");
+		String scheduleID = InputUtil.getInstance().readLine();
+		booking.setFlightSchedule(ClassWrapperUtil.wrapFlightSchedule(scheduleID));
+		
+		System.out.println("Enter seat ID:");
+		String seatID = InputUtil.getInstance().readLine();
+		booking.setSeat(ClassWrapperUtil.wrapSeat(seatID));
+		
+		System.out.println("Enter fight ID:");
+		String flightID = InputUtil.getInstance().readLine();
+		booking.setFlight(ClassWrapperUtil.wrapFlight(flightID));
+		
+		System.out.println("Enter price:");
+		double price = InputUtil.getInstance().readDouble();
+		booking.setPrice(price);
+		
+		System.out.println("Enter departure date(yyyy-MM-dd):");
+		Date departureDate = InputUtil.getInstance().readDate();
+		booking.setDepartureDate(departureDate);
+		super.getDAO().insert(booking);
+		InputUtil.getInstance().closeReader();
+	}
 
 	
 	

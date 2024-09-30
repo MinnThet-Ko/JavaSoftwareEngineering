@@ -3,6 +3,11 @@ package com.hm.assignment8.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class InputUtil {
 	
@@ -35,6 +40,17 @@ public class InputUtil {
 	
 	public double readDouble() {
 		return Double.parseDouble(readLine());
+	}
+	
+	public Date readDate() {
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		try {
+			return format.parse(readLine());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void closeReader() {

@@ -10,12 +10,6 @@ public class SeatService extends BaseService<Seat>{
 		super(dao);
 	}
 
-	@Override
-	public Seat wrapEntityClass(String ID) {
-		Seat seat = new Seat();
-		seat.setSeatNo(ID);
-		return seat;
-	}
 
 	@Override
 	public String getEntityType() {

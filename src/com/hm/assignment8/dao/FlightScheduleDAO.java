@@ -7,12 +7,18 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hm.assignment8.model.Flight;
 import com.hm.assignment8.model.FlightSchedule;
-import com.hm.assignment8.model.Route;
 import com.hm.assignment8.utils.DatabaseUtil;
 
 public class FlightScheduleDAO implements BaseDAO<FlightSchedule>{
+	
+	private FlightDAO flightDAO;
+	private RouteDAO routeDAO;
+	
+	public FlightScheduleDAO() {
+		this.flightDAO = new FlightDAO();
+		this.routeDAO = new RouteDAO();
+	}
 
 	@Override
 	public List<FlightSchedule> getAll() {
@@ -24,14 +30,10 @@ public class FlightScheduleDAO implements BaseDAO<FlightSchedule>{
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				FlightSchedule fs = new FlightSchedule();
-				Flight f = new Flight();
-				Route r = new Route();
-				f.setFlightID(rs.getString("flight_id"));
-				r.setRouteID(rs.getString("route_id"));
 				fs.setScheduleID(rs.getString("schedule_id"));
 				fs.setDepartureTime(rs.getTimestamp("departure_date"));
-				fs.setFlight(f);
-				fs.setRoute(r);
+				fs.setFlight(this.flightDAO.selectByID(rs.getString("flight_id")));
+				fs.setRoute(this.routeDAO.selectByID(rs.getString("route_id")));
 				resultScheduleList.add(fs);
 			}
 			DatabaseUtil.getInstance().closeConnection();
@@ -86,14 +88,10 @@ public class FlightScheduleDAO implements BaseDAO<FlightSchedule>{
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				FlightSchedule fs = new FlightSchedule();
-				Flight f = new Flight();
-				Route r = new Route();
-				f.setFlightID(rs.getString("flight_id"));
-				r.setRouteID(rs.getString("route_id"));
 				fs.setScheduleID(rs.getString("schedule_id"));
 				fs.setDepartureTime(rs.getTimestamp("departure_date"));
-				fs.setFlight(f);
-				fs.setRoute(r);
+				fs.setFlight(this.flightDAO.selectByID(rs.getString("flight_id")));
+				fs.setRoute(this.routeDAO.selectByID(rs.getString("route_id")));
 				resultScheduleList.add(fs);
 			}
 			DatabaseUtil.getInstance().closeConnection();

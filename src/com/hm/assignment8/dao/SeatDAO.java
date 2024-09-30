@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.hm.assignment8.model.Flight;
 import com.hm.assignment8.model.Seat;
-import com.hm.assignment8.model.Seat;
 import com.hm.assignment8.utils.DatabaseUtil;
 
 public class SeatDAO implements BaseDAO<Seat>{

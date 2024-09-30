@@ -5,14 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.hm.assignment8.model.Booking;
-import com.hm.assignment8.model.Customer;
-import com.hm.assignment8.model.Flight;
-import com.hm.assignment8.model.FlightSchedule;
-import com.hm.assignment8.model.Seat;
 import com.hm.assignment8.utils.DatabaseUtil;;
 
 public class BookingDAO implements BaseDAO<Booking> {
@@ -21,14 +16,14 @@ public class BookingDAO implements BaseDAO<Booking> {
 	private SeatDAO seatDAO;
 	private FlightDAO flightDAO;
 	private FlightScheduleDAO flightScheduleDAO;
-	
+
 	public BookingDAO() {
-		this.customerDAO =  new CustomerDAO();
+		this.customerDAO = new CustomerDAO();
 		this.seatDAO = new SeatDAO();
 		this.flightDAO = new FlightDAO();
 		this.flightScheduleDAO = new FlightScheduleDAO();
 	}
-	
+
 	@Override
 	public List<Booking> getAll() {
 		String query = "select * from Booking";
@@ -38,25 +33,18 @@ public class BookingDAO implements BaseDAO<Booking> {
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				Booking b = new Booking();
-				Customer c = new Customer();
-				Seat s = new Seat();
-				Flight f = new Flight();
-				FlightSchedule fs = new FlightSchedule();
+
 				b.setBookingID(rs.getString("Booking_id"));
 				b.setPrice(rs.getDouble("price"));
 				b.setDepartureDate(rs.getDate("departure_date"));
 
-				c.setCustomerID();
-				b.setCustomer(this.customerDAO.select(c));
+				b.setCustomer(this.customerDAO.selectByID(rs.getString("customer_id")));
 
-				s.setSeatNo(rs.getString("seat_id"));
-				b.setSeat(s);
+				b.setSeat(this.seatDAO.selectByID(rs.getString("seat_dao")));
 
-				f.setFlightID(rs.getString("flight_id"));
-				b.setFlight(f);
+				b.setFlight(this.flightDAO.selectByID(rs.getString("flight_id")));
 
-				fs.setScheduleID(rs.getString("schedule_id"));
-				b.setFlightSchedule(fs);
+				b.setFlightSchedule(this.flightScheduleDAO.selectByID("schedule_id"));
 				resultList.add(b);
 			}
 			DatabaseUtil.getInstance().closeConnection();
@@ -70,9 +58,7 @@ public class BookingDAO implements BaseDAO<Booking> {
 	@Override
 	public boolean insert(Booking parameters) {
 		String query = "insert into booking (booking_id, customer_id, schedule_id, seat_id, flight_id, price, departure_date ) \r\n"
-				+ "values (?,?,?,?,?,?,?)\r\n"
-				+ "on conflict (booking_id)\r\n"
-				+ "do update\r\n"
+				+ "values (?,?,?,?,?,?,?)\r\n" + "on conflict (booking_id)\r\n" + "do update\r\n"
 				+ "set customer_id = EXCLUDED.customer_id, schedule_id = EXCLUDED.schedule_id, seat_id = EXCLUDED.seat_id, flight_id = EXCLUDED.flight_id, price = EXCLUDED.price, departure_date = EXCLUDED.departure_date;";
 		try {
 			PreparedStatement statement = DatabaseUtil.getInstance().getConnection().prepareStatement(query);
@@ -91,8 +77,6 @@ public class BookingDAO implements BaseDAO<Booking> {
 		}
 		return false;
 	}
-
-
 
 	@Override
 	public boolean delete(String id) {
@@ -119,25 +103,18 @@ public class BookingDAO implements BaseDAO<Booking> {
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				Booking b = new Booking();
-				Customer c = new Customer();
-				Seat s = new Seat();
-				Flight f = new Flight();
-				FlightSchedule fs = new FlightSchedule();
+
 				b.setBookingID(rs.getString("Booking_id"));
 				b.setPrice(rs.getDouble("price"));
 				b.setDepartureDate(rs.getDate("departure_date"));
 
-				c.setCustomerID(rs.getString("customer_id"));
-				b.setCustomer(c);
+				b.setCustomer(this.customerDAO.selectByID(rs.getString("customer_id")));
 
-				s.setSeatNo(rs.getString("seat_id"));
-				b.setSeat(s);
+				b.setSeat(this.seatDAO.selectByID(rs.getString("seat_dao")));
 
-				f.setFlightID(rs.getString("flight_id"));
-				b.setFlight(f);
+				b.setFlight(this.flightDAO.selectByID(rs.getString("flight_id")));
 
-				fs.setScheduleID(rs.getString("schedule_id"));
-				b.setFlightSchedule(fs);
+				b.setFlightSchedule(this.flightScheduleDAO.selectByID("schedule_id"));
 				resultList.add(b);
 			}
 			DatabaseUtil.getInstance().closeConnection();
