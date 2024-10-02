@@ -27,14 +27,15 @@ public class DatabaseUtil {
 		return databaseUtil;
 	}
 
-	//I'll use single thread connection for now. I'll update this method after I have learned about connection pooling.
+	// I'll use single thread connection for now. I'll update this method after I
+	// have learned about connection pooling.
 	public Connection getConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			if (this.connection.isClosed()) {
-				this.connection = DriverManager.getConnection(this.dbProperties.getProperty("url"),
-						this.dbProperties.getProperty("username"), this.dbProperties.getProperty("password"));
-			}
+
+			this.connection = DriverManager.getConnection(this.dbProperties.getProperty("url"),
+					this.dbProperties.getProperty("username"), this.dbProperties.getProperty("password"));
+
 			return this.connection;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

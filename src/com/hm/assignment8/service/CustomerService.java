@@ -19,11 +19,9 @@ public class CustomerService extends BaseService<Customer> {
 	@Override
 	public void register() {
 		Customer customer = new Customer();
-		customer.setCustomerID("CUS"+IDGenerator.generateRandomNumber());
-		
+		System.out.println(customer.getCustomerID());
 		System.out.println("Enter customer name:");
-		customer.setCustomerID(InputUtil.getInstance().readLine());
-		
+		customer.setName(InputUtil.getInstance().readLine());
 		super.getDAO().insert(customer);
 	}
 

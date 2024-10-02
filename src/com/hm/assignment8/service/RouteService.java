@@ -5,12 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+import com.hm.assignment8.dao.BaseDAO;
 import com.hm.assignment8.dao.CityDAO;
 import com.hm.assignment8.dao.RouteDAO;
 import com.hm.assignment8.model.City;
 import com.hm.assignment8.model.Route;
+import com.hm.assignment8.utils.IDGenerator;
+import com.hm.assignment8.utils.InputUtil;
 
-public class RouteService {
+public class RouteService extends BaseService<Route>{
+
+	public RouteService(BaseDAO<Route> dao) {
+		super(dao);
+	}
 
 	private CityDAO cityDAO = new CityDAO();
 	private RouteDAO routeDAO = new RouteDAO();
@@ -23,6 +30,48 @@ public class RouteService {
 	private Stack<City> cityStack = new Stack<>();
 	private List<List<City>> possibleCities = new ArrayList<>();
 
+	@Override
+	public void showMenu() {
+		System.out.println("Choose an operation:");
+		System.out.println(String.format("1. Insert %s", getEntityType()));
+		System.out.println(String.format("2. Delete %s", getEntityType()));
+		System.out.println(String.format("3. Find %s by ID", getEntityType()));
+		System.out.println(String.format("4. Find all %s", getEntityType()));
+		System.out.println("5. Get all routes");
+		System.out.println("6. Exit");
+	}
+	
+	@Override
+	public void call() {
+		showMenu();
+		int input = InputUtil.getInstance().readInt();
+		if (input == 6) {
+			return;
+		}
+
+		switch (input) {
+		case 1:
+			register();
+			break;
+		case 2:
+			delete();
+			break;
+		case 3:
+			findByID();
+			break;
+		case 4:
+			findAll();
+			break;
+			
+		case 5:
+			findAllPossibleRoutes();
+			break;
+		default:
+			break;
+		}
+		call();
+	}
+	
 	public boolean checkVisitedCity(City c) {
 		boolean existsInVisited = false;
 		for (City vc : this.visitedCities) {
@@ -44,10 +93,9 @@ public class RouteService {
 		return  existsInStack;
 	}
 
-	public void findAllRoutes() {
+	public void findRoute() {
 		this.cityStack.add(pointerCity);
 		if (this.pointerCity.equals(this.endCity)) {
-			System.out.println("Checking end city and pointer city");
 			this.possibleCities.addAll(Arrays.asList(this.cityStack));
 			this.cityStack.pop();
 			this.pointerCity = this.cityStack.get(this.cityStack.size() - 1);
@@ -65,13 +113,10 @@ public class RouteService {
 			
 			//Check for end city
 			if(adjacentCity.equals(this.endCity)) {
-				System.out.println("In the end city check");
-				System.out.println(this.cityStack);
 				List<City> resultRoute = new ArrayList<>();
 				resultRoute.addAll(cityStack);
 				resultRoute.add(adjacentCity);
 				this.possibleCities.add(resultRoute);
-				System.out.println(this.possibleCities);
 			}
 			if (!adjacentCity.equals(this.pointerCity) && !checkCityStack(adjacentCity) && !checkVisitedCity(adjacentCity) && !adjacentCity.equals(this.endCity)) {
 				adjacentCities.add(adjacentCity);
@@ -80,25 +125,36 @@ public class RouteService {
 		
 		for (City c : adjacentCities) {
 			this.pointerCity = c;
-			findAllRoutes();
+			findRoute();
 		}
 	}
 
-	public void findAdjacentCities() {
 
+	public void findAllPossibleRoutes() {
+		System.out.println("Enter the starting city ID:");
+		String startingCityID = InputUtil.getInstance().readLine();
+		System.out.println("Enter the ending city ID:");
+		String endingCityID = InputUtil.getInstance().readLine();
+
+		this.startCity = this.cityDAO.selectByID(startingCityID);
+		this.endCity = this.cityDAO.selectByID(endingCityID);
+		this.pointerCity = this.startCity;
+		findRoute();
+		System.out.println(possibleCities);
 	}
 
-	public void testRoutes() {
-		City firstCity = new City();
-		firstCity.setCityID("C001");
-		City secondCity = new City();
-		secondCity.setCityID("C004");
+	@Override
+	public String getEntityType() {
+		return "route";
+	}
 
-		this.startCity = this.cityDAO.selectByID(firstCity.getCityID());
-		this.endCity = this.cityDAO.selectByID(secondCity.getCityID());
-		this.pointerCity = this.startCity;
-		findAllRoutes();
-
+	@Override
+	public void register() {
+		Route route = new Route();
+		route.setRouteID("R"+IDGenerator.generateRandomNumber());
+		System.out.println("Enter route name:");
+		route.setRouteName(InputUtil.getInstance().readLine());
+		super.getDAO().insert(route);
 	}
 
 }

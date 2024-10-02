@@ -43,5 +43,8 @@ public class Customer {
 		this.bookingList = bookingList;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return String.format("Customer ID: %s\nCustomer name: %s", this.customerID, this.name);
+	}
 }

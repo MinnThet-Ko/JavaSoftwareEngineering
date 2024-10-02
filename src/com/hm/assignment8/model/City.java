@@ -41,7 +41,7 @@ public class City {
 	
 	@Override
 	public String toString() {
-		return String.format("Name:  %s", this.cityName);
+		return String.format("City ID: %s\nName: %s", this.cityID, this.cityName);
 	}
 
 	public boolean equals(City c) {
